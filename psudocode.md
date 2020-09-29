@@ -87,3 +87,82 @@ Psudocode for Quiz
         crossorigin="anonymous"></script>
     <link href="script.js" rel="javaScript">
     </link>
+
+
+function buildQuiz() {
+    // output stores the html output (questions/answer choices)
+    const output = [];
+
+    // for each question...                                                                         
+    myQuestions.forEach(
+        //--data value--, --data index--                                                                        // Arrow functions allow us to write shorter function syntax
+        (currentQuestion, questionNumber) => {
+            // variable to store the list of possible answers
+            const answers = [];
+
+            // for each available answer...
+            for (letter in currentQuestion.answers) {                                                                   // The in operator returns true if the specified property is in the specified object or its prototype chain.
+
+                // ...add an html button
+                // Radio buttons let a user select only one of a limited number of choices
+                answers.push(                                                                                          // template literals are ${} for strings. Have to be inside back ticks
+                    `<label>
+                   <input type="radio" name="question${questionNumber}" value="${letter}">                                     
+                    ${letter} :
+                    ${currentQuestion.answers[letter]}
+                    </label>`
+                );
+            }
+            // add this question and its answers to the output                                                          
+            output.push(
+                `<div class="question"> ${currentQuestion.question} </div>
+                <div class="answers"> ${answers.join('')} </div>`
+            );
+            // takes generated html and shows it on the page                                                           // The join() method returns the array as a string.
+            quizContainer.innerHTML = output.join('');
+        }
+    )
+}
+
+// display quiz right away
+buildQuiz();
+
+
+
+function showResults(i) {
+    currentQuestion = myQuestions[i]
+    var question = document.createElement("div");
+    var answerA = document.createElement("div");
+    var answerB = document.createElement("div");
+    var answerC = document.createElement("div");
+    question.textContent = currentQuestion.question;
+    answerA.textContent = currentQuestion.answers.a;
+    answerB.textContent = currentQuestion.answers.b;
+    answerC.textContent = currentQuestion.answers.c;
+    quizContainer.appendChild(question)
+    quizContainer.appendChild(answerA)
+    quizContainer.appendChild(answerB)
+    quizContainer.appendChild(answerC)
+
+}
+showResults(0)
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+======================================================
+
+
+
+
+
