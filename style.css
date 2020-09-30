@@ -25,3 +25,7 @@ body {
 #results {
     text-align: center;
 }
+#highscores {
+    color: chocolate;
+    font-size: 20px;
+}

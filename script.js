@@ -10,8 +10,7 @@ var questionId = 0;
 button.className = "btn btn-primary";
 var timerInterval;
 var highscores = document.getElementById("highscores");
-highscores = document.createElement("button")
-highscores.addEventListener("click", seeHighscores);
+highscores.addEventListener("click", Highscore);
 
 
 // list of possible questions
@@ -169,13 +168,15 @@ function endQuiz() {
 
 
 
-function seeHighscores (){
-    // when we click highscore 
-    var HSbutton = 
-    HSbutton.className = "btn";
-    // we see highscore list
-}
-
+// function seeHighscores (){
+//     var scoreData = document.createElement("ul");
+//     for (const s in scores) {
+//         var score = scores[s];
+//         scoreData += `<li>${score.name} in ${score.time} seconds</li>`;
+//     }
+//     scoreData += "</ul>"
+//     document.getElementById("results").innerHTML = scoreData;
+// }
 
 
 function Highscore() {
@@ -194,16 +195,6 @@ function Highscore() {
     scores.push(thisScore); // append score to scores array.
     localStorage.setItem("scores", JSON.stringify(scores));
 
-
-    // localStorage.setItem("Username", username);
-    // // store time left
-    // localStorage.setItem("Time", finalTime);
-
-    // //    score title
-    // var title = document.createElement("h1");
-    // title.textContent = "SCORE"
-    // document.getElementById("results").append(title);
-
     var scoreData = document.createElement("ul");
     for (const s in scores) {
         var score = scores[s];
@@ -213,9 +204,9 @@ function Highscore() {
 
 
 
-    // show username
+//  show username
 
-    document.getElementById("results").innerHTML = scoreData;
+     document.getElementById("results").innerHTML = scoreData;
 
 //     // show time
 //     var HighscoreTimeHeading = document.createElement("h3");
