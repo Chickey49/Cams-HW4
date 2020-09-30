@@ -10,7 +10,7 @@ var questionId = 0;
 button.className = "btn btn-primary";
 var timerInterval;
 var highscores = document.getElementById("highscores");
-highscores.addEventListener("click", Highscore);
+highscores.addEventListener("click", showHighScores);
 
 
 // list of possible questions
@@ -109,32 +109,11 @@ function checkAnswer(answer) {
         return endQuiz();
     }
     showQuestion();
-
 }
 
 
-
-// show next question
-/* the last question needs to stop time and display time left */
-// function showNextQuestion(answer) {
-//     // judge answer/ if correct, show next question
-//     var question = myQuestions[currentQuestionId];
-//     if (question.correctAnswer === answer) {
-//         //  user chose correct
-//     } else
-//         // deduct time show next question 
-//         secondsLeft = -10;
-//     alert("wrong answer")
-//     // showNextQuestion();
-
-//     if (currentQuestionId < myQuestions.length) {
-//         currentQuestionId++;
-//     }
-//     showQuestion(currentQuestionId);
-// }
-
 // timer
-// var timer is already declared
+
 
 function setTime() {
     timerInterval = setInterval(function () {
@@ -151,35 +130,18 @@ function setTime() {
     }, 1000)
 }
 
-// local storage
 
-/*
-request users initials 
-store timerInterval variable in local storage
-show previous highscores
-*/
+
 function endQuiz() {
     clearInterval(timerInterval);
     console.log("quiz done");
-    Highscore();
+    addToHighScore();
+    showHighScores();
 }
 
-// clickable highscore
+// highscores 
 
-
-
-// function seeHighscores (){
-//     var scoreData = document.createElement("ul");
-//     for (const s in scores) {
-//         var score = scores[s];
-//         scoreData += `<li>${score.name} in ${score.time} seconds</li>`;
-//     }
-//     scoreData += "</ul>"
-//     document.getElementById("results").innerHTML = scoreData;
-// }
-
-
-function Highscore() {
+function addToHighScore() {
     var finalTime = 60 - secondsLeft;
     // request username
     var username = prompt("enter username")
@@ -194,24 +156,26 @@ function Highscore() {
     }
     scores.push(thisScore); // append score to scores array.
     localStorage.setItem("scores", JSON.stringify(scores));
+}
 
+// seperate function to show highscores
+function showHighScores() {
+    var scores = JSON.parse(localStorage.getItem("scores")); // get list of all scores from storage.
+    // check to ensure scores it not new/storage is empty.
     var scoreData = document.createElement("ul");
     for (const s in scores) {
         var score = scores[s];
-        scoreData += `<li>${score.name} in ${score.time} seconds</li>`;
+        var content = `${score.name} in ${score.time} seconds`;
+
+        var li = document.createElement("li");
+        scoreData.appendChild(li);
+        li.innerHTML = content;
     }
-    scoreData += "</ul>"
-
-
-
-//  show username
-
-     document.getElementById("results").innerHTML = scoreData;
-
-//     // show time
-//     var HighscoreTimeHeading = document.createElement("h3");
-//     HighscoreTimeHeading.textContent = localStorage.getItem("Time");
-    // document.getElementById("results").append(HighscoreTimeHeading);
+    if (resultsContainer.hasChildNodes() === true) {
+        resultsContainer.replaceChild(scoreData, resultsContainer.childNodes[0])
+    } else {
+        resultsContainer.appendChild(scoreData);
+    }
 
 }
 
